@@ -10,13 +10,12 @@
 </head>
 <body>
   <header class="hero">
-    <p class="kicker">DSC 106 Final Project · Prototype</p>
     <h1>Your parents could afford a place of their own at 22.<br>Can you?</h1>
     <p class="dek">
       Incomes have gone up since our parents were young, but rent and home prices have gone up faster.
       Pick the year your parents turned 22 and the city you live in, and see how the math has changed.
     </p>
-    <p class="team">Sadhana Tadepalli · [Teammate 2] · [Teammate 3] · [Teammate 4]</p>
+    <p class="team">Sadhana Tadepalli · Audrey Miller · Saahithi Myneedu</p>
   </header>
 
   <nav class="controls" aria-label="Personalize the story">
@@ -37,7 +36,7 @@
     <!-- AND -->
     <section class="step" id="and">
       <p class="beat">And</p>
-      <h2>Since your parents were 22, incomes have gone up</h2>
+      <h2 id="national-title">Since your parents were 22, housing has outgrown income</h2>
       <p id="national-readout" class="readout"></p>
       <div class="chart" id="chart-national" role="img" aria-label="Growth of home prices, rent, income and overall prices since the selected year"></div>
       <div class="stats" id="national-stats"></div>
@@ -56,7 +55,7 @@
 
     <section class="step" id="every-city">
       <p class="beat">It's not just you</p>
-      <h2>In most metro areas, rent grew faster than income</h2>
+      <h2 id="scatter-title">Rent grew faster than income in most metro areas</h2>
       <p id="scatter-readout" class="readout"></p>
       <div class="chart" id="chart-scatter" role="img" aria-label="Scatterplot of income growth against rent growth for every metro area"></div>
       <p class="note">One dot per metro area, sized by population, comparing 2005 with 2025. Hover a dot for details; click one to make it your city.</p>
@@ -95,6 +94,13 @@
         and a young adult's income is very different from the median household's, so we may use microdata for 22–25-year-olds.
         Finally, the down-payment calculator has to rest on assumptions about savings rates, so we need to design it so readers can see and change those assumptions
         instead of trusting a single number.
+      </p>
+      <h3>What we might change</h3>
+      <p>
+        Right now the story is one long scrolling page, but we are considering turning it into a paged, step-by-step interactive instead.
+        Each page would hold one chart and its takeaway, with Back and Next buttons and a progress indicator, so readers move through the and-but-therefore structure one beat at a time.
+        This would keep the year and city controls and the active chart on screen together, instead of having readers scroll past text and lose sight of what they changed.
+        The tradeoff is that readers can no longer skim the whole story at a glance, so we would need clear page titles and a way to jump between steps.
       </p>
     </section>
   </main>

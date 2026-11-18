@@ -193,10 +193,16 @@ function drawNational() {
 
   // ---- words ----
   const g = Object.fromEntries(NAT_SERIES.map((s) => [s.key, growth(last, s.key)]));
+  const faster = [
+    g.home_price > g.income ? 'home prices' : null,
+    g.cpi_rent > g.income ? 'rent' : null,
+  ].filter(Boolean);
+  document.querySelector('#national-title').textContent = faster.length
+    ? `Since ${py}, ${faster.join(' and ')} ${faster.length > 1 ? 'have' : 'has'} grown faster than income`
+    : `Since ${py}, income has kept pace with housing costs`;
   document.querySelector('#national-readout').innerHTML =
-    `Since <strong>${py}</strong>, the typical home's price has grown <strong>${fmtX(g.home_price)}</strong> and rent `
-    + `<strong>${fmtX(g.cpi_rent)}</strong>, but household income has grown only <strong>${fmtX(g.income)}</strong>. `
-    + `Overall prices grew ${fmtX(g.cpi_all)} over the same years.`;
+    `Home prices grew <strong>${fmtX(g.home_price)}</strong> and rent <strong>${fmtX(g.cpi_rent)}</strong>, `
+    + `while household income grew <strong>${fmtX(g.income)}</strong>.`;
 
   const ratio0 = base.home_price / base.income;
   const ratio1 = last.home_price / last.income;
@@ -303,20 +309,18 @@ function drawCity() {
 
   // ---- words ----
   const delta = last.rent_burden - first.rent_burden;
-  document.querySelector('#city-title').textContent = delta > 0.5
-    ? `In ${shortName}, rent takes a bigger share of income than it did in ${first.year}`
-    : delta < -0.5
-      ? `In ${shortName}, rent's share of income has eased since ${first.year}, but rent itself has climbed`
-      : `In ${shortName}, rent's share of income has barely moved since ${first.year}`;
-
   const rentChg = (last.rent / first.rent - 1) * 100;
   const incChg = (last.income / first.income - 1) * 100;
+  const pct0 = Math.round(first.rent_burden);
+  const pct1 = Math.round(last.rent_burden);
+  document.querySelector('#city-title').textContent = delta > 0.5
+    ? `${shortName} renters now spend ${pct1}% of their income on rent, up from ${pct0}% in ${first.year}`
+    : delta < -0.5
+      ? `${shortName} renters spend less of their income on rent than in ${first.year}, even though rent rose ${fmtChg(rentChg)}`
+      : `${shortName} renters spend about the same share of income on rent as in ${first.year} (${pct1}%)`;
   document.querySelector('#city-readout').innerHTML =
-    `In ${state.city}, median rent went from <strong>${fmtMoney(first.rent)}</strong> a month in ${first.year} to `
-    + `<strong>${fmtMoney(last.rent)}</strong> in ${last.year} (${fmtChg(rentChg)}), while median household income went from `
-    + `${fmtMoney(first.income)} to ${fmtMoney(last.income)} (${fmtChg(incChg)}). `
-    + `The typical renter there now spends <strong>${fmtPct(last.rent_burden)}</strong> of their income on rent`
-    + `${last.rent_burden >= 30 ? ', above the 30% line that marks a household as "rent-burdened."' : '.'}`;
+    `Median rent rose <strong>${fmtChg(rentChg)}</strong> (${fmtMoney(first.rent)} → ${fmtMoney(last.rent)} a month), `
+    + `while median household income rose <strong>${fmtChg(incChg)}</strong>.`;
 
   const allLatest = metros.filter((d) => d.year === last.year);
   const medRatio = d3.median(allLatest, (d) => d.home_value / d.income);
@@ -442,13 +446,14 @@ function drawScatter() {
   if (!sel) {
     cityLine = `${state.city} isn't shown because it doesn't have estimates for both ${METRO_FIRST} and ${METRO_LAST}.`;
   } else if (sel.rentChg > sel.incomeChg) {
-    cityLine = `${shortName} is one of them: rent rose ${fmtChg(sel.rentChg)} while income rose ${fmtChg(sel.incomeChg)}.`;
+    cityLine = `${shortName} is one of them: rent ${fmtChg(sel.rentChg)}, income ${fmtChg(sel.incomeChg)}.`;
   } else {
-    cityLine = `${shortName} is one of the exceptions: income rose ${fmtChg(sel.incomeChg)} while rent rose ${fmtChg(sel.rentChg)}.`;
+    cityLine = `${shortName} is an exception: income ${fmtChg(sel.incomeChg)}, rent ${fmtChg(sel.rentChg)}.`;
   }
+  document.querySelector('#scatter-title').textContent =
+    `From ${METRO_FIRST} to ${METRO_LAST}, rent grew faster than income in ${d3.format('.0%')(above / n)} of metro areas`;
   document.querySelector('#scatter-readout').innerHTML =
-    `From ${METRO_FIRST} to ${METRO_LAST}, rent grew faster than household income in <strong>${above} of ${n}</strong> metro areas `
-    + `(${d3.format('.0%')(above / n)}). ${cityLine}`;
+    `That's <strong>${above} of ${n}</strong> metros. ${cityLine}`;
 
   const container = document.querySelector('#chart-scatter');
   const w = Math.max(320, container.clientWidth - 8);
