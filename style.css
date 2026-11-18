@@ -1,0 +1,233 @@
+:root {
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --ink-3: #8a8984;
+  --grid: #e4e3df;
+  --rule: #d6d5d0;
+
+  --home: #2a78d6;    /* series 1: home prices */
+  --rent: #eb6834;    /* series 2: rent */
+  --income: #1baf7a;  /* series 3: income */
+  --overall: #9a9993; /* reference: overall prices */
+  --city: #2a78d6;
+  --highlight: #eb6834;
+
+  --measure: 720px;
+  --wide: 960px;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: var(--page);
+  line-height: 1.55;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+
+a { color: var(--home); }
+
+/* ---------- hero ---------- */
+.hero {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: 72px 24px 32px;
+}
+.kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink-2);
+  margin: 0 0 12px;
+}
+h1 {
+  font-size: clamp(2rem, 4.5vw, 3.1rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 0 0 20px;
+  max-width: 20ch;
+}
+.dek {
+  font-size: 1.2rem;
+  color: var(--ink-2);
+  max-width: var(--measure);
+  margin: 0 0 16px;
+}
+.team { font-size: 0.9rem; color: var(--ink-3); margin: 0; }
+
+/* ---------- sticky controls ---------- */
+.controls {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 40px;
+  justify-content: center;
+  padding: 14px 24px;
+  background: rgba(249, 249, 247, 0.94);
+  backdrop-filter: blur(6px);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.control { display: flex; flex-direction: column; gap: 4px; }
+.control-label { font-size: 0.8rem; font-weight: 600; color: var(--ink-2); }
+.control-row { display: flex; align-items: center; gap: 12px; }
+#parent-year { width: 220px; accent-color: var(--ink); }
+#parent-year-out {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 1.15rem;
+  min-width: 3.2em;
+}
+#city {
+  font: inherit;
+  font-size: 1rem;
+  padding: 6px 10px;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--surface);
+  min-width: 240px;
+}
+
+/* ---------- story sections ---------- */
+main { padding-bottom: 40px; }
+.step, .writeup {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: 64px 24px 16px;
+}
+.beat {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 2px 10px;
+  margin: 0 0 12px;
+}
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0 0 12px;
+  max-width: 30ch;
+}
+.readout {
+  font-size: 1.12rem;
+  max-width: var(--measure);
+  margin: 0 0 20px;
+}
+.readout strong { font-variant-numeric: tabular-nums; }
+.note {
+  font-size: 0.85rem;
+  color: var(--ink-2);
+  max-width: var(--measure);
+  margin: 12px 0 0;
+}
+.placeholder {
+  max-width: var(--measure);
+  padding: 20px 24px;
+  border: 1.5px dashed var(--rule);
+  border-radius: 10px;
+  color: var(--ink-2);
+}
+
+/* ---------- charts ---------- */
+.chart {
+  background: var(--surface);
+  border: 1px solid var(--grid);
+  border-radius: 10px;
+  padding: 8px 4px 4px;
+  position: relative;
+}
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.axis text { fill: var(--ink-2); font-size: 12px; }
+.axis path, .axis line { stroke: var(--rule); }
+.axis .domain { display: none; }
+.gridline line { stroke: var(--grid); }
+.gridline .domain { display: none; }
+.axis-title { fill: var(--ink-2); font-size: 12px; }
+.series-label { font-size: 13px; font-weight: 600; fill: var(--ink); }
+.series-value { font-size: 12px; fill: var(--ink-2); font-variant-numeric: tabular-nums; }
+.annotation { font-size: 12px; fill: var(--ink-2); }
+.annotation-strong { font-size: 12.5px; fill: var(--ink); font-weight: 600; }
+.ref-line { stroke: var(--ink-3); stroke-dasharray: 4 4; stroke-width: 1; }
+.crosshair { stroke: var(--ink-3); stroke-width: 1; pointer-events: none; }
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  font-size: 0.85rem;
+  color: var(--ink-2);
+  padding: 4px 16px 0;
+}
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.swatch { width: 18px; height: 3px; border-radius: 2px; display: inline-block; }
+.swatch.dashed { background: repeating-linear-gradient(90deg, currentColor 0 4px, transparent 4px 7px) !important; }
+.swatch.band { height: 10px; border-radius: 3px; }
+
+.dot { cursor: pointer; transition: opacity 150ms; }
+.dot.selected { stroke: var(--ink); stroke-width: 2px; }
+
+/* ---------- stat cards ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--grid);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.stat-label { font-size: 0.8rem; color: var(--ink-2); margin: 0 0 6px; }
+.stat-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+  line-height: 1.15;
+}
+.stat-value .arrow { color: var(--ink-3); font-weight: 400; margin: 0 4px; }
+.stat-sub { font-size: 0.82rem; color: var(--ink-2); margin: 4px 0 0; }
+
+/* ---------- tooltip ---------- */
+.tooltip {
+  position: fixed;
+  z-index: 20;
+  pointer-events: none;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  min-width: 160px;
+  max-width: 280px;
+}
+.tooltip .tt-title { font-weight: 700; margin-bottom: 4px; }
+.tooltip .tt-row { display: flex; justify-content: space-between; gap: 16px; }
+.tooltip .tt-key { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); }
+.tooltip .tt-val { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+/* ---------- writeup + footer ---------- */
+.writeup { border-top: 1px solid var(--rule); margin-top: 48px; }
+.writeup h3 { font-size: 1.1rem; margin: 24px 0 8px; }
+.writeup p { max-width: var(--measure); color: var(--ink-2); }
+footer {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: 24px 24px 64px;
+  font-size: 0.85rem;
+  color: var(--ink-2);
+  border-top: 1px solid var(--rule);
+}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Can We Afford to Live Like Our Parents Did?</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" type="module"></script>
+</head>
+<body>
+  <header class="hero">
+    <p class="kicker">DSC 106 Final Project · Prototype</p>
+    <h1>Your parents could afford a place of their own at 22.<br>Can you?</h1>
+    <p class="dek">
+      Incomes have gone up since our parents were young, but rent and home prices have gone up faster.
+      Pick the year your parents turned 22 and the city you live in, and see how the math has changed.
+    </p>
+    <p class="team">Sadhana Tadepalli · [Teammate 2] · [Teammate 3] · [Teammate 4]</p>
+  </header>
+
+  <nav class="controls" aria-label="Personalize the story">
+    <label class="control">
+      <span class="control-label">My parents turned 22 in</span>
+      <span class="control-row">
+        <input id="parent-year" type="range" min="1984" max="2005" value="1995" step="1">
+        <output id="parent-year-out" for="parent-year">1995</output>
+      </span>
+    </label>
+    <label class="control">
+      <span class="control-label">I live in</span>
+      <select id="city"></select>
+    </label>
+  </nav>
+
+  <main>
+    <!-- AND -->
+    <section class="step" id="and">
+      <p class="beat">And</p>
+      <h2>Since your parents were 22, incomes have gone up</h2>
+      <p id="national-readout" class="readout"></p>
+      <div class="chart" id="chart-national" role="img" aria-label="Growth of home prices, rent, income and overall prices since the selected year"></div>
+      <div class="stats" id="national-stats"></div>
+      <p class="note">National data from FRED, 1984–2025. Each line shows how many times its starting value it has grown since the year you picked. Hover to compare any year.</p>
+    </section>
+
+    <!-- BUT -->
+    <section class="step" id="but">
+      <p class="beat">But</p>
+      <h2 id="city-title">In your city, rent takes a bigger share of income</h2>
+      <p id="city-readout" class="readout"></p>
+      <div class="chart" id="chart-city" role="img" aria-label="Rent as a share of income in the selected city compared with all metro areas"></div>
+      <div class="stats" id="city-stats"></div>
+      <p class="note">American Community Survey 1-year estimates, 2005–2025. The Census did not publish standard 1-year estimates for 2020, so that year is a gap. The gray band covers the middle half of all metro areas.</p>
+    </section>
+
+    <section class="step" id="every-city">
+      <p class="beat">It's not just you</p>
+      <h2>In most metro areas, rent grew faster than income</h2>
+      <p id="scatter-readout" class="readout"></p>
+      <div class="chart" id="chart-scatter" role="img" aria-label="Scatterplot of income growth against rent growth for every metro area"></div>
+      <p class="note">One dot per metro area, sized by population, comparing 2005 with 2025. Hover a dot for details; click one to make it your city.</p>
+    </section>
+
+    <!-- THEREFORE -->
+    <section class="step" id="therefore">
+      <p class="beat">Therefore</p>
+      <h2>"Just save more" doesn't work the way it used to</h2>
+      <p class="placeholder">
+        Coming next: a down-payment calculator that shows how many years of saving it takes to buy the median home
+        in your city today versus the year your parents were 22, and our closing takeaway.
+      </p>
+    </section>
+
+    <!-- PROTOTYPE WRITEUP -->
+    <section class="writeup" id="writeup">
+      <h2>Prototype writeup</h2>
+      <h3>What have we done so far?</h3>
+      <p>
+        We collected and cleaned two public datasets: American Community Survey 1-year estimates for 414 U.S. metro areas from 2005 to 2025,
+        and national FRED series for home prices, household income, rent, and overall inflation going back to 1984.
+        Because metro-area codes and names change between Census years, we wrote a Python script that matches each metro by its principal city and state,
+        so a city's history lines up across all 20 years.
+        We laid out the full and-but-therefore structure of the page and built three working D3 visualizations.
+        The year slider re-bases the national chart to the year your parents turned 22, the city picker drives the rent-burden chart and its summary numbers,
+        and the scatterplot lets readers hover over any metro and click it to make it their city.
+        We also added annotations and tooltips so each chart states its main finding in plain language.
+      </p>
+      <h3>What will be the most challenging part to design, and why?</h3>
+      <p>
+        The hardest part will be making the "then vs. now" comparison fair at the city level.
+        Our city data starts in 2005, but most of our readers' parents turned 22 between the mid-1980s and early 2000s,
+        so we need to bring in the 1990 and 2000 decennial Census tables and line up their geography and dollar values with the ACS.
+        A second challenge is choosing a measure of affordability that is honest: rent as a share of income depends on whose income you use,
+        and a young adult's income is very different from the median household's, so we may use microdata for 22–25-year-olds.
+        Finally, the down-payment calculator has to rest on assumptions about savings rates, so we need to design it so readers can see and change those assumptions
+        instead of trusting a single number.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Data:</strong>
+      <a href="https://www.census.gov/data/developers/data-sets/acs-1year.html">ACS 1-year estimates</a> (B19013, B25064, B25077, B25071, B01003) ·
+      FRED <a href="https://fred.stlouisfed.org/series/MSPUS">MSPUS</a>,
+      <a href="https://fred.stlouisfed.org/series/MEHOINUSA646N">MEHOINUSA646N</a>,
+      <a href="https://fred.stlouisfed.org/series/CUUR0000SEHA">CUUR0000SEHA</a>,
+      <a href="https://fred.stlouisfed.org/series/CPIAUCSL">CPIAUCSL</a>
+    </p>
+    <p>Built with D3.js for DSC 106 at UC San Diego.</p>
+  </footer>
+
+  <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
+</body>
+</html>
