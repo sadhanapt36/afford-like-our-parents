@@ -73,6 +73,7 @@ h1 {
 }
 .control { display: flex; flex-direction: column; gap: 4px; }
 .control-label { font-size: 0.8rem; font-weight: 600; color: var(--ink-2); }
+.control-hint { font-size: 0.75rem; color: var(--ink-3); max-width: 280px; }
 .control-row { display: flex; align-items: center; gap: 12px; }
 #parent-year { width: 220px; accent-color: var(--ink); }
 #parent-year-out {

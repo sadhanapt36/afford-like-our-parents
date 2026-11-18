@@ -86,7 +86,27 @@ const latestMetros = [...byMetro.keys()]
   .filter((m) => byMetro.get(m).at(-1).year === METRO_LAST)
   .sort(d3.ascending);
 if (!latestMetros.includes(state.city)) state.city = latestMetros[0];
-citySelect.innerHTML = latestMetros.map((m) => `<option value="${m}">${m}</option>`).join('');
+const STATE_NAMES = {
+  AL: 'Alabama', AK: 'Alaska', AZ: 'Arizona', AR: 'Arkansas', CA: 'California', CO: 'Colorado',
+  CT: 'Connecticut', DE: 'Delaware', DC: 'District of Columbia', FL: 'Florida', GA: 'Georgia',
+  HI: 'Hawaii', ID: 'Idaho', IL: 'Illinois', IN: 'Indiana', IA: 'Iowa', KS: 'Kansas',
+  KY: 'Kentucky', LA: 'Louisiana', ME: 'Maine', MD: 'Maryland', MA: 'Massachusetts',
+  MI: 'Michigan', MN: 'Minnesota', MS: 'Mississippi', MO: 'Missouri', MT: 'Montana',
+  NE: 'Nebraska', NV: 'Nevada', NH: 'New Hampshire', NJ: 'New Jersey', NM: 'New Mexico',
+  NY: 'New York', NC: 'North Carolina', ND: 'North Dakota', OH: 'Ohio', OK: 'Oklahoma',
+  OR: 'Oregon', PA: 'Pennsylvania', RI: 'Rhode Island', SC: 'South Carolina', SD: 'South Dakota',
+  TN: 'Tennessee', TX: 'Texas', UT: 'Utah', VT: 'Vermont', VA: 'Virginia', WA: 'Washington',
+  WV: 'West Virginia', WI: 'Wisconsin', WY: 'Wyoming',
+};
+// Group the dropdown by state. A metro that crosses state lines is listed
+// under its principal city's state (e.g. New York, NY covers parts of NJ and PA).
+const byState = d3.groups(latestMetros, (m) => m.split(', ')[1])
+  .map(([abbr, list]) => [STATE_NAMES[abbr] ?? abbr, list])
+  .sort((a, b) => d3.ascending(a[0], b[0]));
+citySelect.innerHTML = byState.map(([state, list]) => `
+  <optgroup label="${state}">
+    ${list.map((m) => `<option value="${m}">${m}</option>`).join('')}
+  </optgroup>`).join('');
 citySelect.value = state.city;
 
 yearInput.addEventListener('input', () => {
