@@ -77,31 +77,23 @@
       <h2>Prototype writeup</h2>
       <h3>What have we done so far?</h3>
       <p>
-        We collected and cleaned two public datasets: American Community Survey 1-year estimates for 414 U.S. metro areas from 2005 to 2025,
-        and national FRED series for home prices, household income, rent, and overall inflation going back to 1984.
-        Because metro-area codes and names change between Census years, we wrote a Python script that matches each metro by its principal city and state,
-        so a city's history lines up across all 20 years.
-        We laid out the full and-but-therefore structure of the page and built three working D3 visualizations.
-        The year slider re-bases the national chart to the year your parents turned 22, the city picker drives the rent-burden chart and its summary numbers,
-        and the scatterplot lets readers hover over any metro and click it to make it their city.
-        We also added annotations and tooltips so each chart states its main finding in plain language.
+        So far, we have collected and cleaned the national FRED data and ACS data, which covered 414 metropolitan areas.
+        Additionally, we have built a Python script to standardize the metro names and prepare the datasets for the website.
+        We have also begun creating our responsive and interactive <a href="https://d3js.org/">D3.js</a> webpage.
+        So far, we have added the following features: a year slider for rebasing national affordability trends,
+        a city dropdown for comparing rent burdens, and a scatterplot comparing rent and income growth across the metros.
+        We also designed the site’s “and-but-therefore” aspect.
       </p>
-      <h3>What will be the most challenging part to design, and why?</h3>
+      <h3>What will be the most challenging of your project to design and why?</h3>
       <p>
-        The hardest part will be making the "then vs. now" comparison fair at the city level.
-        Our city data starts in 2005, but most of our readers' parents turned 22 between the mid-1980s and early 2000s,
-        so we need to bring in the 1990 and 2000 decennial Census tables and line up their geography and dollar values with the ACS.
-        A second challenge is choosing a measure of affordability that is honest: rent as a share of income depends on whose income you use,
-        and a young adult's income is very different from the median household's, so we may use microdata for 22–25-year-olds.
-        Finally, the down-payment calculator has to rest on assumptions about savings rates, so we need to design it so readers can see and change those assumptions
-        instead of trusting a single number.
-      </p>
-      <h3>What we might change</h3>
-      <p>
-        Right now the story is one long scrolling page, but we are considering turning it into a paged, step-by-step interactive instead.
-        Each page would hold one chart and its takeaway, with Back and Next buttons and a progress indicator, so readers move through the and-but-therefore structure one beat at a time.
-        This would keep the year and city controls and the active chart on screen together, instead of having readers scroll past text and lose sight of what they changed.
-        The tradeoff is that readers can no longer skim the whole story at a glance, so we would need clear page titles and a way to jump between steps.
+        The most challenging part we anticipate designing will be making historical comparisons geographically and economically fair.
+        Additionally, we find that handling changing census geography may be a challenge, as metropolitan boundaries differ over time,
+        making previous data less reliable.
+        We also anticipate that choosing the right affordability measure will be difficult,
+        as the median household rent burden does not accurately represent a 22-year-old's circumstances.
+        Finally, we anticipate a challenge when designing a down payment calculator.
+        The calculator will require savings rates, inflation, assumptions, and potentially changing housing costs.
+        The challenge will arise when ensuring these assumptions remain visible and adjustable rather than presented as one fixed answer.
       </p>
     </section>
   </main>
